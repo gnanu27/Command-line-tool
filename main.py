@@ -22,7 +22,7 @@ def add():
     data_to_dict = eval(data)
     avail = collection.find_one({'_id': data_to_dict['_id']})
     if(avail):
-        print('Records with same ID already available')
+        raise valueError('Records with same ID already available')
     else:
         collection.insert_one(data_to_dict)
         print(data)
@@ -34,8 +34,7 @@ def delete():
     if(avail):
         collection.delete_one(data_to_dict)
     else:
-        print('record is not available to delete')
-    print(collection.count_documents({}))
+        raise valueError('record is not available to delete')
 
 def find():
     data = args.find
@@ -44,7 +43,7 @@ def find():
     if(avail):
         print(avail)
     else:
-        print("Record is not available To Find")
+        raise valueError("Record is not available To Find")
 
 def fetchAll():
     data = args.fetchAll
@@ -54,7 +53,7 @@ def fetchAll():
         for i in result:
             print(i)
     else:
-        print("Record with such key is not available")
+        raise valueError("Record with such key is not available")
 def select():
     data = args1['select'] 
     data_to_dict = eval(data)
@@ -63,7 +62,7 @@ def select():
         print(result[args1['f']])
     else:
         raise valueError('id is not available in records')
-    
+
 if(args.add):
     add()
 if(args.delete):
